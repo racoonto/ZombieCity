@@ -25,7 +25,9 @@ public class Bullet : MonoBehaviour
         if (other.CompareTag("Zombie")) // 이 방식 추천 -> GC 발생 x
         {
             var zombie = other.GetComponent<Zombie>();
-            zombie.TakeHit(power);
+            //Vector3 toMoveDirection = transform.position - zombie.transform.position;
+            //toMoveDirection.Normalize();
+            zombie.TakeHit(power, transform.forward);
             Destroy(gameObject);
         }
     }

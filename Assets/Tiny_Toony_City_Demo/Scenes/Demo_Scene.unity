@@ -2619,6 +2619,10 @@ PrefabInstance:
       propertyPath: hp
       value: 100000
       objectReference: {fileID: 0}
+    - target: {fileID: 7040432331553427628, guid: 7bcada194f4aa7d419981035220a3adb, type: 3}
+      propertyPath: moveBackNoise
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 7040432331553427629, guid: 7bcada194f4aa7d419981035220a3adb, type: 3}
       propertyPath: m_Name
       value: Zombie
