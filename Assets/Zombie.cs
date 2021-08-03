@@ -9,12 +9,14 @@ public class Zombie : MonoBehaviour
     private NavMeshAgent agent;
     private Animator animator;
     public int hp = 100;
+    private float originalSpeed;
 
     private IEnumerator Start()
     {
         agent = GetComponent<NavMeshAgent>();
         target = FindObjectOfType<Player>().transform;
         animator = GetComponentInChildren<Animator>();
+        originalSpeed = agent.speed;
         //target = Player.Instance.transform;
 
         while (hp > 0)
@@ -31,11 +33,23 @@ public class Zombie : MonoBehaviour
         //animator.Play("TakeHit");
         animator.Play(Random.Range(0, 2) == 0 ? "TakeHit1" : "TakeHit2", 0, 0);
         // 피격 이펙트 생성(피,..)
+
+        StartCoroutine(SetTakeHitSpeedCo());
+
         if (hp <= 0)
         {
             GetComponent<Collider>().enabled = false;
             Invoke(nameof(Die), 1);//1초 뒤에 die함수 실행
         }
+    }
+
+    public float TakeHitStopSpeedTime = 0.1f;
+
+    private IEnumerator SetTakeHitSpeedCo()
+    {
+        agent.speed = 0;
+        yield return new WaitForSeconds(TakeHitStopSpeedTime);
+        agent.speed = originalSpeed;
     }
 
     private void Die()
