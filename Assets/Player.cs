@@ -62,6 +62,13 @@ public partial class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.D)) move.x = 1;
         if (move != Vector3.zero)
         {
+            //카메라 기준으로 이동하는 코드
+            Vector3 relateMove;
+            relateMove = Camera.main.transform.forward * move.z;
+            relateMove += Camera.main.transform.right * move.x;
+            relateMove.y = 0;
+            move = relateMove;
+
             move.Normalize();
             transform.Translate(move * speed * Time.deltaTime, Space.World);
             //transform.forward = move;
