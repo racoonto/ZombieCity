@@ -34,7 +34,10 @@ public class Zombie : MonoBehaviour
         animator.Play(Random.Range(0, 2) == 0 ? "TakeHit1" : "TakeHit2", 0, 0);
         // 피격 이펙트 생성(피,..)
 
-        StartCoroutine(SetTakeHitSpeedCo());
+        agent.speed = 0;
+        CancelInvoke(nameof(SetTakeHitSpeedCo));
+        Invoke(nameof(SetTakeHitSpeedCo), TakeHitStopSpeedTime);
+        //StartCoroutine(SetTakeHitSpeedCo());
 
         if (hp <= 0)
         {
@@ -45,10 +48,10 @@ public class Zombie : MonoBehaviour
 
     public float TakeHitStopSpeedTime = 0.1f;
 
-    private IEnumerator SetTakeHitSpeedCo()
+    private void SetTakeHitSpeedCo()
     {
-        agent.speed = 0;
-        yield return new WaitForSeconds(TakeHitStopSpeedTime);
+        //agent.speed = 0;
+        //yield return new WaitForSeconds(TakeHitStopSpeedTime);
         agent.speed = originalSpeed;
     }
 
