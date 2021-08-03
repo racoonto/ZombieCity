@@ -9,6 +9,12 @@ using UnityEngine;
 /// </summary>
 static public class MyExtension
 {
+    public static float VectorToDegree(this Vector3 v)
+    {
+        float radian = Mathf.Atan2(v.z, v.x);
+        return (radian * Mathf.Rad2Deg);
+    }
+
     public static T AddOrGetComponent<T>(this Transform tr) where T : Component
     {
         T t = tr.GetComponent<T>();
@@ -26,6 +32,7 @@ static public class MyExtension
 
         return t;
     }
+
     static public string ShortName(this System.Type type)
     {
         string[] tempName = type.ToString().Split('.');
@@ -36,7 +43,7 @@ static public class MyExtension
 
     /// <summary>
     /// 스트링에서 태그(<b>, <color>,...)를 제외한 길이를 반환한다
-    /// <b>test</b> // 실제 길이 4, 글자길이 11(태그길이7), 
+    /// <b>test</b> // 실제 길이 4, 글자길이 11(태그길이7),
     /// </summary>
     /// <param name="richText">[태그가 포함된] 원본 문자열</param>
     /// <returns>태그가 제외된 문자열의 길이</returns>
