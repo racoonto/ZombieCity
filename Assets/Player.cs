@@ -10,6 +10,7 @@ public partial class Player : MonoBehaviour
     private void Awake()
     {
         animator = GetComponentInChildren<Animator>();
+        bulletLight = GetComponentInChildren<Light>(true).gameObject;
     }
 
     private void Update()

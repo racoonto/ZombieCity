@@ -28,7 +28,8 @@ public class Zombie : MonoBehaviour
     internal void TakeHit(int damage)
     {
         hp -= damage;
-        animator.Play("TakeHit");
+        //animator.Play("TakeHit");
+        animator.Play(Random.Range(0, 2) == 0 ? "TakeHit1" : "TakeHit2", 0, 0);
         // 피격 이펙트 생성(피,..)
         if (hp <= 0)
         {
