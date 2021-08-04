@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class Player : MonoBehaviour
+public partial class Player : Actor
 {
     public enum StateType
     {
@@ -15,7 +15,7 @@ public partial class Player : MonoBehaviour
     }
 
     public bool isFiring = false;
-    private Animator animator;
+    public StateType stateType = StateType.Idle;
 
     private void Awake()
     {
@@ -33,9 +33,8 @@ public partial class Player : MonoBehaviour
             LookAtMouse();
             Move();
             Fire();
+            Roll();
         }
-
-        Roll();
     }
 
     private void Roll()
@@ -46,34 +45,30 @@ public partial class Player : MonoBehaviour
 
     public AnimationCurve rollingSpeedAC;
 
-    public float rollingSpeedUserMultiply = 1;
-
-    public StateType stateType = StateType.Idle;
+    public float rollingSpeedUserMultipy = 1;
 
     private IEnumerator RollCo()
     {
-        EndFiring();
+        Endfiring();
 
+        // 회전 방향은 처음 바라보던 방향으로 고정.
+        // 총알 금지. 움직이는거 금지.마우스 바라보는거 금지.
         stateType = StateType.Roll;
-        //구르는 애니메이션 재생.
+        // 구르는 애니메이션 재생.
         animator.SetTrigger("Roll");
-
-        //구르는 동안 이동 스피드를 빠르게 하기
-        float startTime = Time.time;
-        float endTime = startTime + rollingSpeedAC[rollingSpeedAC.length - 1].time;
+        // 구르는 동안 이동 스피드를 빠르게 하기.
+        float starTime = Time.time;
+        float endTime = starTime + rollingSpeedAC[rollingSpeedAC.length - 1].time;
         while (endTime > Time.time)
         {
-            float time = Time.time - startTime;
-            float rollingSpeedmultiply = rollingSpeedAC.Evaluate(time) * rollingSpeedUserMultiply;
+            float time = Time.time - starTime;
+            float rollingSpeedMultipy = rollingSpeedAC.Evaluate(time) * rollingSpeedUserMultipy;
+            //print($"{time}:{rollingSpeedMultipy} : {rollingSpeedAC[rollingSpeedAC.length - 1].time}");
 
-            //회전 방향은 처음 바라보던 방향으로 고정.
-            transform.Translate(transform.forward * speed * rollingSpeedmultiply * Time.deltaTime, Space.World);
-
+            transform.Translate(transform.forward * speed * rollingSpeedMultipy * Time.deltaTime, Space.World);
             yield return null;
         }
         stateType = StateType.Idle;
-
-        //총알 금지. 움직이는거 금지. 마우스 바라보는 거 금지.
     }
 
     private Plane plane = new Plane(new Vector3(0, 1, 0), 0);
@@ -92,20 +87,6 @@ public partial class Player : MonoBehaviour
         }
     }
 
-    //private void Fire()
-    //{
-    //    if (Input.GetKey(KeyCode.Mouse0))
-    //    {
-    //        //animator.Play("Shoot");
-    //        animator.SetBool("Fire", true);
-    //        Instantiate(bullet, bulletPosition.position, transform.rotation);
-    //    }
-    //    else
-    //    {
-    //        animator.SetBool("Fire", false);
-    //    }
-    //}
-
     private void Move()
     {
         Vector3 move = Vector3.zero;
@@ -115,7 +96,6 @@ public partial class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.D)) move.x = 1;
         if (move != Vector3.zero)
         {
-            //카메라 기준으로 이동하는 코드
             Vector3 relateMove;
             relateMove = Camera.main.transform.forward * move.z;
             relateMove += Camera.main.transform.right * move.x;
@@ -123,8 +103,9 @@ public partial class Player : MonoBehaviour
             move = relateMove;
 
             move.Normalize();
-            transform.Translate(move * speed * Time.deltaTime, Space.World);
-            //transform.forward = move;
+
+            float _speed = isFiring ? speedWhileShooting : speed;
+            transform.Translate(move * _speed * Time.deltaTime, Space.World);
         }
 
         animator.SetFloat("DirX", move.x);
@@ -132,8 +113,13 @@ public partial class Player : MonoBehaviour
         animator.SetFloat("Speed", move.sqrMagnitude);
     }
 
+    internal void TakeHit(int damage)
+    {
+        hp -= damage;
+
+        //CreateBloodEffect();
+    }
+
     public float speed = 5;
     public float speedWhileShooting = 3;
-    //public GameObject bullet;
-    //public Transform bulletPosition;
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class Player : MonoBehaviour
+public partial class Player : Actor
 {
     public GameObject bullet;
     public Transform bulletPosition;
@@ -24,11 +24,11 @@ public partial class Player : MonoBehaviour
         }
         else
         {
-            EndFiring();
+            Endfiring();
         }
     }
 
-    private void EndFiring()
+    private void Endfiring()
     {
         animator.SetBool("Fire", false);
         DecreaseRecoil();
@@ -40,7 +40,7 @@ public partial class Player : MonoBehaviour
 
     private IEnumerator InstantiateBulletAndFlashBulletCo()
     {
-        yield return null;
+        yield return null; // 총쏘는 애니메이션 시작후에 총알 발사하기 위해서 1Frame쉼
         Instantiate(bullet, bulletPosition.position, CalculateRecoil(transform.rotation));
 
         bulletLight.SetActive(true);
