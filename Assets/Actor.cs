@@ -9,6 +9,7 @@ public class Actor : MonoBehaviour
 
     public GameObject bloodParticle;
     protected Animator animator;
+
     protected void CreateBloodEffect()
     {
         var pos = transform.position;

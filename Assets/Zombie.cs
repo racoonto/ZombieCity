@@ -17,7 +17,7 @@ public class Zombie : Actor
         animator = GetComponentInChildren<Animator>();
         target = FindObjectOfType<Player>().transform;  //
         originalSpeed = agent.speed;
-        //attackCollider = GetComponentInChildren<SphereCollider>();
+        attackCollider = transform.Find("AttackRange").GetComponent<SphereCollider>();
 
         CurrentFsm = ChaseFSM;
 
@@ -45,8 +45,6 @@ public class Zombie : Actor
         get { return m_currentFsm; }
         set
         {
-            //코루틴 진행중에 다른 코루틴 시작하면 중복 오류.
-            //코루틴이 있다면 Stop 시키고 진행
             if (fsmHandle != null)
                 StopCoroutine(fsmHandle);
 
@@ -62,14 +60,15 @@ public class Zombie : Actor
         if (target)
             agent.destination = target.position;
         yield return new WaitForSeconds(Random.Range(0.5f, 2f));
+
         SetFsm_SelectAttackTargetOrAttackOrChase();
     }
 
     private void SetFsm_SelectAttackTargetOrAttackOrChase()
     {
-        // 타겟이 공격 범위 안에 들어왔는가?
         if (IsAttackableTarget())
         {
+            // 타겟이 공격 범위 안에 들어왔는가?
             if (TargetIsInAttackArea()) // 들어왔다면
                 CurrentFsm = AttackFSM;
             else
@@ -78,15 +77,16 @@ public class Zombie : Actor
         else
         {
             print("배회하기 구현해야함");
-            // 공격 가능한 타겟 찾기
-
-            //공격 가능한 타겟이 없다면 배회하기 혹은 가만 있기
+            // 공격 가능한 타겟 찾기.
+            // 공격 가느한 타겟이 없다면
+            //-> 배회하기 혹은 제자리 가만 있기.
         }
     }
 
     private bool IsAttackableTarget()
     {
-        if (target.GetComponent<Player>().stateType == Player.StateType.Die)
+        if (target.GetComponent<Player>().stateType
+            == Player.StateType.Die)
             return false;
 
         return true;
@@ -128,7 +128,9 @@ public class Zombie : Actor
         yield return new WaitForSeconds(attackTime);
 
         // 충돌메시 사용해서 충돌 감지하기.
-        Collider[] enemyColliders = Physics.OverlapSphere(attackCollider.transform.position, attackCollider.radius, enemyLayer);
+        Collider[] enemyColliders = Physics.OverlapSphere(
+            attackCollider.transform.position
+            , attackCollider.radius, enemyLayer);
         foreach (var item in enemyColliders)
         {
             item.GetComponent<Player>().TakeHit(power);
@@ -147,6 +149,12 @@ public class Zombie : Actor
     internal void TakeHit(int damage, Vector3 toMoveDirection)
     {
         hp -= damage;
+        if (hp <= 0)
+        {
+            GetComponent<Collider>().enabled = false;
+            animator.SetBool("Die", true);
+        }
+
         // 뒤로 밀려나게하자.
         PushBackMove(toMoveDirection);
 
@@ -162,16 +170,29 @@ public class Zombie : Actor
         // 이동 스피드를 잠시 0으로 만들자.
         agent.speed = 0;
 
-        yield return new WaitForSeconds(TakeHitStopSpeedTime);
-        SetOriginalSpeed();
+        yield return new WaitForSeconds(TakeHitStopSpeedTime); // 피격 모션 끝나기까지 기다림.
 
         if (hp <= 0)
         {
-            GetComponent<Collider>().enabled = false;
-            yield return new WaitForSeconds(1);
             Die();
+            yield break;
         }
+        else
+        {
+            SetOriginalSpeed();
+        }
+
         CurrentFsm = ChaseFSM;
+    }
+
+    public int rewardScore = 100;
+    public float onDieDestroyDelay = 2f;
+
+    private void Die()
+    {
+        StageManager.Instance.AddScore(rewardScore);
+        //animator.Play("Die");
+        Destroy(gameObject, onDieDestroyDelay);
     }
 
     public float moveBackDistance = 0.1f;
@@ -191,11 +212,5 @@ public class Zombie : Actor
     private void SetOriginalSpeed()
     {
         agent.speed = originalSpeed;
-    }
-
-    private void Die()
-    {
-        animator.Play("Die");
-        Destroy(gameObject, 1);
     }
 }

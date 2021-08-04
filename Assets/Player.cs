@@ -119,7 +119,7 @@ public partial class Player : Actor
     internal void TakeHit(int damage)
     {
         hp -= damage;
-        print("캐릭터 hp : " + hp);
+
         CreateBloodEffect();
 
         animator.SetTrigger("TakeHit");
@@ -137,7 +137,6 @@ public partial class Player : Actor
         stateType = StateType.Die;
         GetComponent<Collider>().enabled = false;
         yield return new WaitForSeconds(diePreDelayTime);
-
         animator.SetTrigger("Die");
     }
 

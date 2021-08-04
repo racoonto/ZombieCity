@@ -27,7 +27,6 @@ public class EditorUtil
             return;
         }
 
-
         AssetDatabase.SaveAssets();
 
         // 씬 저장하겠는지 물어본다.
@@ -53,6 +52,7 @@ public class EditorUtil
             new System.Type[]{
                 typeof(TextMesh),
                 typeof(TMPro.TextMeshPro),
+                typeof(TMPro.TextMeshProUGUI),
                 typeof(Animation),
                 typeof(Image),
                 typeof(Text),
