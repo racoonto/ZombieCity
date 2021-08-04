@@ -28,6 +28,9 @@ public partial class Player : Actor
         if (Time.deltaTime == 0)
             return;
 
+        if (stateType == StateType.Die)
+            return;
+
         if (stateType != StateType.Roll)
         {
             LookAtMouse();
@@ -117,7 +120,25 @@ public partial class Player : Actor
     {
         hp -= damage;
         print("캐릭터 hp : " + hp);
-        //CreateBloodEffect();
+        CreateBloodEffect();
+
+        animator.SetTrigger("TakeHit");
+
+        if (hp <= 0)
+        {
+            StartCoroutine(DieCo());
+        }
+    }
+
+    public float diePreDelayTime = 0.3f;
+
+    private IEnumerator DieCo()
+    {
+        stateType = StateType.Die;
+        GetComponent<Collider>().enabled = false;
+        yield return new WaitForSeconds(diePreDelayTime);
+
+        animator.SetTrigger("Die");
     }
 
     public float speed = 5;

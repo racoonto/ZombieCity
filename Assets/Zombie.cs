@@ -17,7 +17,7 @@ public class Zombie : Actor
         animator = GetComponentInChildren<Animator>();
         target = FindObjectOfType<Player>().transform;  //
         originalSpeed = agent.speed;
-        attackCollider = GetComponentInChildren<SphereCollider>();
+        //attackCollider = GetComponentInChildren<SphereCollider>();
 
         CurrentFsm = ChaseFSM;
 
@@ -62,12 +62,34 @@ public class Zombie : Actor
         if (target)
             agent.destination = target.position;
         yield return new WaitForSeconds(Random.Range(0.5f, 2f));
+        SetFsm_SelectAttackTargetOrAttackOrChase();
+    }
 
+    private void SetFsm_SelectAttackTargetOrAttackOrChase()
+    {
         // 타겟이 공격 범위 안에 들어왔는가?
-        if (TargetIsInAttackArea()) // 들어왔다면
-            CurrentFsm = AttackFSM;
+        if (IsAttackableTarget())
+        {
+            if (TargetIsInAttackArea()) // 들어왔다면
+                CurrentFsm = AttackFSM;
+            else
+                CurrentFsm = ChaseFSM;
+        }
         else
-            CurrentFsm = ChaseFSM;
+        {
+            print("배회하기 구현해야함");
+            // 공격 가능한 타겟 찾기
+
+            //공격 가능한 타겟이 없다면 배회하기 혹은 가만 있기
+        }
+    }
+
+    private bool IsAttackableTarget()
+    {
+        if (target.GetComponent<Player>().stateType == Player.StateType.Die)
+            return false;
+
+        return true;
     }
 
     public float attackDistance = 3;
@@ -106,9 +128,7 @@ public class Zombie : Actor
         yield return new WaitForSeconds(attackTime);
 
         // 충돌메시 사용해서 충돌 감지하기.
-        Collider[] enemyColliders = Physics.OverlapSphere(
-            attackCollider.transform.position
-            , attackCollider.radius, enemyLayer);
+        Collider[] enemyColliders = Physics.OverlapSphere(attackCollider.transform.position, attackCollider.radius, enemyLayer);
         foreach (var item in enemyColliders)
         {
             item.GetComponent<Player>().TakeHit(power);
@@ -121,7 +141,7 @@ public class Zombie : Actor
         SetOriginalSpeed();
 
         // FSM지정.
-        CurrentFsm = ChaseFSM;
+        SetFsm_SelectAttackTargetOrAttackOrChase();
     }
 
     internal void TakeHit(int damage, Vector3 toMoveDirection)
