@@ -116,7 +116,7 @@ public partial class Player : Actor
     internal void TakeHit(int damage)
     {
         hp -= damage;
-
+        print("캐릭터 hp : " + hp);
         //CreateBloodEffect();
     }
 

@@ -45,6 +45,8 @@ public class Zombie : Actor
         get { return m_currentFsm; }
         set
         {
+            //코루틴 진행중에 다른 코루틴 시작하면 중복 오류.
+            //코루틴이 있다면 Stop 시키고 진행
             if (fsmHandle != null)
                 StopCoroutine(fsmHandle);
 
