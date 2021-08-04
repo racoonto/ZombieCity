@@ -18,9 +18,63 @@ public partial class Player : MonoBehaviour
         if (Time.deltaTime == 0)
             return;
 
-        LookAtMouse();
-        Move();
-        Fire();
+        if (stateType != StateType.Roll)
+        {
+            LookAtMouse();
+            Move();
+            Fire();
+        }
+
+        Roll();
+    }
+
+    private void Roll()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+            StartCoroutine(RollCo());
+    }
+
+    public AnimationCurve rollingSpeedAC;
+
+    public float rollingSpeedUserMultiply = 1;
+
+    public enum StateType
+    {
+        Idle,
+        Move,
+        Attack,
+        TakeHit,
+        Roll,
+        Die,
+    }
+
+    public StateType stateType = StateType.Idle;
+
+    private IEnumerator RollCo()
+    {
+        animator.SetBool("Fire", false);
+        DecreaseRecoil();
+
+        stateType = StateType.Roll;
+        //구르는 애니메이션 재생.
+        animator.SetTrigger("Roll");
+
+        //구르는 동안 이동 스피드를 빠르게 하기
+        float startTime = Time.time;
+        float endTime = startTime + rollingSpeedAC[rollingSpeedAC.length - 1].time;
+        while (endTime > Time.time)
+        {
+            float time = Time.time - startTime;
+            float rollingSpeedmultiply = rollingSpeedAC.Evaluate(time) * rollingSpeedUserMultiply;
+
+            //회전 방향은 처음 바라보던 방향으로 고정.
+            transform.Translate(transform.forward * speed * rollingSpeedmultiply * Time.deltaTime, Space.World);
+
+            yield return null;
+        }
+        stateType = StateType.Idle;
+
+        //총알 금지. 움직이는거 금지. 마우스 바라보는 거 금지.
     }
 
     private Plane plane = new Plane(new Vector3(0, 1, 0), 0);
