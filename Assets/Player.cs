@@ -5,6 +5,16 @@ using UnityEngine;
 
 public partial class Player : MonoBehaviour
 {
+    public enum StateType
+    {
+        Idle,
+        Move,
+        TakeHit,
+        Roll,
+        Die,
+    }
+
+    public bool isFiring = false;
     private Animator animator;
 
     private void Awake()
@@ -38,22 +48,11 @@ public partial class Player : MonoBehaviour
 
     public float rollingSpeedUserMultiply = 1;
 
-    public enum StateType
-    {
-        Idle,
-        Move,
-        Attack,
-        TakeHit,
-        Roll,
-        Die,
-    }
-
     public StateType stateType = StateType.Idle;
 
     private IEnumerator RollCo()
     {
-        animator.SetBool("Fire", false);
-        DecreaseRecoil();
+        EndFiring();
 
         stateType = StateType.Roll;
         //구르는 애니메이션 재생.
@@ -134,6 +133,7 @@ public partial class Player : MonoBehaviour
     }
 
     public float speed = 5;
+    public float speedWhileShooting = 3;
     //public GameObject bullet;
     //public Transform bulletPosition;
 }
