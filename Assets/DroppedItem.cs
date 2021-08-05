@@ -68,15 +68,20 @@ public class DroppedItem : MonoBehaviour
         }
     }
 
+    public Color color = Color.white;
+
     private void ItemAcquisition()
     {
         alreadyDone = true;
         switch (type)
         {
             case DropItemType.Gold:
+                Actor.CreateTextEffect(amount, transform.position, color);
                 StageManager.Instance.AddGold(amount);
                 break;
         }
+
+        transform.GetComponentInParent<MoveToPlayer>()?.StopCoroutine();
         Destroy(transform.root.gameObject);
     }
 }

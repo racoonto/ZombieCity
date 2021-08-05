@@ -7,6 +7,7 @@ public class Bullet : MonoBehaviour
     public float speed = 20;
     public float destroyTime = 1f;
     public int power = 20;
+    public int randomDamage = 4;
 
     private void Start()
     {
@@ -27,7 +28,7 @@ public class Bullet : MonoBehaviour
             var zombie = other.GetComponent<Zombie>();
             //Vector3 toMoveDirection = transform.position - zombie.transform.position;
             //toMoveDirection.Normalize();
-            zombie.TakeHit(power, transform.forward);
+            zombie.TakeHit(power + Random.Range(-randomDamage, randomDamage), transform.forward);
             Destroy(gameObject);
         }
     }

@@ -5,6 +5,7 @@ using UnityEngine.AI;
 using DG.Tweening;
 using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
+using System;
 
 public class MoveToPlayer : MonoBehaviour
 {
@@ -15,10 +16,10 @@ public class MoveToPlayer : MonoBehaviour
     private bool alreadyDone = false;
     private TweenerCore<float, float, FloatOptions> tweenResult;
 
-    private IEnumerator OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (alreadyDone)
-            yield break; // 코루틴 정지
+            return; // 코루틴 정지
 
         if (other.CompareTag("Player"))
         {
@@ -26,11 +27,23 @@ public class MoveToPlayer : MonoBehaviour
             agent = GetComponent<NavMeshAgent>();
             tweenResult = DOTween.To(() => agent.speed, (x) => agent.speed = x, maxSpeed, duration);
 
-            while (true)
-            {
-                agent.destination = other.transform.position;
-                yield return null;
-            }
+            setDestinationCoHandle = StartCoroutine(SetDestinationCo(other.transform));
+        }
+    }
+
+    public void StopCoroutine()
+    {
+        StopCoroutine(setDestinationCoHandle);
+    }
+
+    private Coroutine setDestinationCoHandle;
+
+    private IEnumerator SetDestinationCo(Transform tr)
+    {
+        while (true)
+        {
+            agent.destination = tr.position;
+            yield return null;
         }
     }
 
