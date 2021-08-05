@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponInfo : MonoBehaviour
+[CreateAssetMenu(fileName = "New Weapon Info", menuName = "Scriptable Object/Weapon Info")]
+public class WeaponInfo : ScriptableObject
 {
     public int damage = 20;
     public AnimatorOverrideController overrideAnimator;
+    public GameObject weaponGo;
 }
