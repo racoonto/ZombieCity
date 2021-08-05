@@ -36,6 +36,7 @@ public class StageManager : SingletonMonoBehavior<StageManager>
     internal void AddGold(int amount)
     {
         gold += amount;
+
         GoldUIRefresh();
     }
 

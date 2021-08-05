@@ -116,11 +116,9 @@ public partial class Player : Actor
         animator.SetFloat("Speed", move.sqrMagnitude);
     }
 
-    internal void TakeHit(int damage)
+    new internal void TakeHit(int damage)
     {
-        hp -= damage;
-
-        CreateBloodEffect();
+        base.TakeHit(damage);
 
         animator.SetTrigger("TakeHit");
 

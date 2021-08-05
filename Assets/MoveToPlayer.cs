@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Options;
 
 public class MoveToPlayer : MonoBehaviour
 {
@@ -11,18 +13,18 @@ public class MoveToPlayer : MonoBehaviour
     public float duration = 3;
 
     private bool alreadyDone = false;
+    private TweenerCore<float, float, FloatOptions> tweenResult;
 
     private IEnumerator OnTriggerEnter(Collider other)
     {
         if (alreadyDone)
-            yield break; //코루틴 정지
+            yield break; // 코루틴 정지
 
         if (other.CompareTag("Player"))
         {
             alreadyDone = true;
             agent = GetComponent<NavMeshAgent>();
-
-            DOTween.To(() => agent.speed, (x) => agent.speed = x, maxSpeed, duration);
+            tweenResult = DOTween.To(() => agent.speed, (x) => agent.speed = x, maxSpeed, duration);
 
             while (true)
             {
@@ -30,5 +32,10 @@ public class MoveToPlayer : MonoBehaviour
                 yield return null;
             }
         }
+    }
+
+    private void OnDestroy()
+    {
+        tweenResult.Kill();
     }
 }
