@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public partial class Player : Actor
 {
@@ -25,6 +26,13 @@ public partial class Player : Actor
         bulletLight = GetComponentInChildren<Light>(true).gameObject;
 
         animator.runtimeAnimatorController = currentWeapon.overrideAnimator; // 애니메이션 덮어 씌우기
+
+        var vcs = FindObjectsOfType<CinemachineVirtualCamera>();
+        foreach (var item in vcs)
+        {
+            item.Follow = transform;
+            item.LookAt = transform;
+        }
     }
 
     private void Update()

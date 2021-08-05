@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 13ebdd5d6ea86f94fb0ae11be07738de, type: 3}
-  m_Name: BatWeaponInfo
+  m_Name: Rifle
   m_EditorClassIdentifier: 
   damage: 20
-  overrideAnimator: {fileID: 22100000, guid: f4e489b46a3695b4ba971c15e83f206c, type: 2}
+  overrideAnimator: {fileID: 22100000, guid: 9371e6af84bdcc94faced10b013629c4, type: 2}
   weaponGo: {fileID: 4440936695980444475, guid: 6704785efa4a054468000da078da4791, type: 3}
