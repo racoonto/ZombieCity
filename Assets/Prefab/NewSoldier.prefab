@@ -55,6 +55,7 @@ MonoBehaviour:
   isFiring: 0
   stateType: 0
   currentWeapon: {fileID: 0}
+  rightWeaponPosition: {fileID: 0}
   rollingSpeedAC:
     serializedVersion: 2
     m_Curve:
@@ -522,61 +523,3 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -7030748607437524586, guid: 24a843a66cb0d3940bdc391548fe2aac, type: 3}
   m_PrefabInstance: {fileID: 6019563668888927682}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &7937780327814021175
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 5612622201827462228}
-    m_Modifications:
-    - target: {fileID: 4440936695980444474, guid: 6704785efa4a054468000da078da4791, type: 3}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4440936695980444474, guid: 6704785efa4a054468000da078da4791, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4440936695980444474, guid: 6704785efa4a054468000da078da4791, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4440936695980444474, guid: 6704785efa4a054468000da078da4791, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 10.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 4440936695980444474, guid: 6704785efa4a054468000da078da4791, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7686026
-      objectReference: {fileID: 0}
-    - target: {fileID: 4440936695980444474, guid: 6704785efa4a054468000da078da4791, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.000000029802326
-      objectReference: {fileID: 0}
-    - target: {fileID: 4440936695980444474, guid: 6704785efa4a054468000da078da4791, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.6397265
-      objectReference: {fileID: 0}
-    - target: {fileID: 4440936695980444474, guid: 6704785efa4a054468000da078da4791, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.000000029802326
-      objectReference: {fileID: 0}
-    - target: {fileID: 4440936695980444474, guid: 6704785efa4a054468000da078da4791, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4440936695980444474, guid: 6704785efa4a054468000da078da4791, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 79.543
-      objectReference: {fileID: 0}
-    - target: {fileID: 4440936695980444474, guid: 6704785efa4a054468000da078da4791, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4440936695980444475, guid: 6704785efa4a054468000da078da4791, type: 3}
-      propertyPath: m_Name
-      value: baseballbat
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: -62182817845931712, guid: 6704785efa4a054468000da078da4791, type: 3}
-  m_SourcePrefab: {fileID: 100100000, guid: 6704785efa4a054468000da078da4791, type: 3}

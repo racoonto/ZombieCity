@@ -19,6 +19,7 @@ public partial class Player : Actor
     public StateType stateType = StateType.Idle;
 
     public WeaponInfo currentWeapon;
+    public Transform rightWeaponPosition;
 
     private void Awake()
     {
@@ -26,6 +27,11 @@ public partial class Player : Actor
         bulletLight = GetComponentInChildren<Light>(true).gameObject;
 
         animator.runtimeAnimatorController = currentWeapon.overrideAnimator; // 애니메이션 덮어 씌우기
+        //rightWeaponPosition 부모
+        var go = Instantiate(currentWeapon.weaponGo, rightWeaponPosition);
+        go.transform.localScale = currentWeapon.weaponGo.transform.localScale;
+        go.transform.localPosition = currentWeapon.weaponGo.transform.localPosition;
+        go.transform.localRotation = currentWeapon.weaponGo.transform.localRotation;
 
         var vcs = FindObjectsOfType<CinemachineVirtualCamera>();
         foreach (var item in vcs)
@@ -123,8 +129,8 @@ public partial class Player : Actor
             transform.Translate(move * _speed * Time.deltaTime, Space.World);
         }
 
-        animator.SetFloat("DirX", move.x);
-        animator.SetFloat("DirY", move.z);
+        animator.SetFloat("DirX", transform.forward.x);
+        animator.SetFloat("DirY", transform.forward.z);
         animator.SetFloat("Speed", move.sqrMagnitude);
     }
 

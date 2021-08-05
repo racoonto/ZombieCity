@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 20
   overrideAnimator: {fileID: 22100000, guid: 9371e6af84bdcc94faced10b013629c4, type: 2}
-  weaponGo: {fileID: 4440936695980444475, guid: 6704785efa4a054468000da078da4791, type: 3}
+  weaponGo: {fileID: 3607737297526771188, guid: d0ad0d71f54799f4185d1007117e3908, type: 3}
