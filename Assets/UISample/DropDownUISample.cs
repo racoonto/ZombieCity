@@ -7,17 +7,18 @@ namespace UISample
 {
     public class DropDownUISample : MonoBehaviour
     {
-        Dropdown dropdown;
-        SaveInt lastSelectedIndex;
-        void Start()
+        private Dropdown dropdown;
+        private SaveInt lastSelectedIndex;
+
+        private void Start()
         {
             dropdown = transform.Find("Dropdown").GetComponent<Dropdown>();
             dropdown.onValueChanged.AddListener(OnValueChanged);
             lastSelectedIndex = new SaveInt("lastSelectedIndex");
-            dropdown.value = lastSelectedIndex.Value;
+            dropdown.value = lastSelectedIndex;
         }
 
-        void OnValueChanged(int selectedIndex)
+        private void OnValueChanged(int selectedIndex)
         {
             lastSelectedIndex.Value = selectedIndex;
             string selectedText = dropdown.options[selectedIndex].text;

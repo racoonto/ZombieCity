@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class DropDownUI : BaseUI<DropDownUI>
 {
-    Dropdown dropdown;
+    private Dropdown dropdown;
 
     protected override void OnInit()
     {
@@ -14,13 +14,14 @@ public class DropDownUI : BaseUI<DropDownUI>
         lastSelectedIndex = new SaveInt("lastSelectedIndex");
     }
 
-    SaveInt lastSelectedIndex;
+    private SaveInt lastSelectedIndex;
+
     protected override void OnShow()
     {
-        dropdown.value = lastSelectedIndex.Value;
+        dropdown.value = lastSelectedIndex;
     }
 
-    void Selected(int selectedIndex)
+    private void Selected(int selectedIndex)
     {
         string selectedText = dropdown.options[selectedIndex].text;
         print($"선택된 인덱스 : {selectedIndex} , {selectedText}");

@@ -18,7 +18,7 @@ public class StageManager : SingletonMonoBehavior<StageManager>
     {
         score += addScore;
 
-        if (highScore.Value < score)
+        if (highScore < score)
             highScore.Value = score;
 
         ScoreUIRefresh();
@@ -26,6 +26,6 @@ public class StageManager : SingletonMonoBehavior<StageManager>
 
     private void ScoreUIRefresh()
     {
-        ScoreUI.Instance.UpdateUI(score, highScore.Value);
+        ScoreUI.Instance.UpdateUI(score, highScore);
     }
 }
