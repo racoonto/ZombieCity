@@ -38,6 +38,9 @@ public partial class Player : Actor
         bulletPosition = weaponInfo.bulletPosition;
         if (weaponInfo.bulletLight != null)
             bulletLight = weaponInfo.bulletLight.gameObject;
+
+        shootDelay = currentWeapon.delay;
+
         SetCinemachinCamera();
     }
 
@@ -186,6 +189,6 @@ public partial class Player : Actor
     internal void OnZombieEnter(Collider other)
     {
         var zombie = other.GetComponent<Zombie>();
-        zombie.TakeHit(currentWeapon.damage, currentWeapon.gameObject.transform.forward);
+        zombie.TakeHit(currentWeapon.damage, currentWeapon.gameObject.transform.forward, currentWeapon.pushBackDistance);
     }
 }
