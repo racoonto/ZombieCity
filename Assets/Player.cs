@@ -32,7 +32,12 @@ public partial class Player : Actor
         go.transform.localScale = currentWeapon.weaponGo.transform.localScale;
         go.transform.localPosition = currentWeapon.weaponGo.transform.localPosition;
         go.transform.localRotation = currentWeapon.weaponGo.transform.localRotation;
+        SetCinemachineCamera();
+    }
 
+    [ContextMenu("SetCinemachineCamera")]
+    private void SetCinemachineCamera()
+    {
         var vcs = FindObjectsOfType<CinemachineVirtualCamera>();
         foreach (var item in vcs)
         {
@@ -129,8 +134,17 @@ public partial class Player : Actor
             transform.Translate(move * _speed * Time.deltaTime, Space.World);
         }
 
-        animator.SetFloat("DirX", transform.forward.x);
-        animator.SetFloat("DirY", transform.forward.z);
+        if (Mathf.RoundToInt(transform.forward.x) == 1 || Mathf.RoundToInt(transform.forward.x) == -1)
+        {
+            animator.SetFloat("DirX", transform.forward.z * move.z);
+            animator.SetFloat("DirY", transform.forward.x * move.x);
+        }
+        else
+        {
+            animator.SetFloat("DirX", transform.forward.x * move.x);
+            animator.SetFloat("DirY", transform.forward.z * move.z);
+        }
+
         animator.SetFloat("Speed", move.sqrMagnitude);
     }
 
