@@ -14,7 +14,6 @@ public class MoveToPlayer : MonoBehaviour
     public float duration = 3;
 
     private bool alreadyDone = false;
-    private TweenerCore<float, float, FloatOptions> tweenResult;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -25,7 +24,7 @@ public class MoveToPlayer : MonoBehaviour
         {
             alreadyDone = true;
             agent = GetComponent<NavMeshAgent>();
-            tweenResult = DOTween.To(() => agent.speed, (x) => agent.speed = x, maxSpeed, duration);
+            DOTween.To(() => agent.speed, (x) => agent.speed = x, maxSpeed, duration).SetLink(gameObject);
 
             setDestinationCoHandle = StartCoroutine(SetDestinationCo(other.transform));
         }
@@ -45,10 +44,5 @@ public class MoveToPlayer : MonoBehaviour
             agent.destination = tr.position;
             yield return null;
         }
-    }
-
-    private void OnDestroy()
-    {
-        tweenResult.Kill();
     }
 }
