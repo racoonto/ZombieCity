@@ -43,10 +43,10 @@ public class LightManager : MonoBehaviour
         RenderSettings.ambientLight = nightColor;
     }
 
-    private void Start()
-    {
-        ChangeDayLight();
-    }
+    //private void Start()
+    //{
+    //    ChangeDayLight();
+    //}
 
     private void Update()
     {

@@ -24,19 +24,21 @@ public partial class Player : Actor
     private void Awake()
     {
         animator = GetComponentInChildren<Animator>();
-        bulletLight = GetComponentInChildren<Light>(true).gameObject;
 
-        animator.runtimeAnimatorController = currentWeapon.overrideAnimator; // 애니메이션 덮어 씌우기
+        animator.runtimeAnimatorController = currentWeapon.overrideAnimator;
         //rightWeaponPosition 부모
-        var go = Instantiate(currentWeapon.weaponGo, rightWeaponPosition);
-        go.transform.localScale = currentWeapon.weaponGo.transform.localScale;
-        go.transform.localPosition = currentWeapon.weaponGo.transform.localPosition;
-        go.transform.localRotation = currentWeapon.weaponGo.transform.localRotation;
-        SetCinemachineCamera();
+        var weaponInfo = Instantiate(currentWeapon, rightWeaponPosition);
+        weaponInfo.transform.localScale = currentWeapon.gameObject.transform.localScale;
+        weaponInfo.transform.localPosition = currentWeapon.gameObject.transform.localPosition;
+        weaponInfo.transform.localRotation = currentWeapon.gameObject.transform.localRotation;
+
+        bulletPosition = weaponInfo.bulletPosition;
+        bulletLight = weaponInfo.bulletLight.gameObject;
+        SetCinemachinCamera();
     }
 
-    [ContextMenu("SetCinemachineCamera")]
-    private void SetCinemachineCamera()
+    [ContextMenu("SetCinemachinCamera")]
+    private void SetCinemachinCamera()
     {
         var vcs = FindObjectsOfType<CinemachineVirtualCamera>();
         foreach (var item in vcs)
@@ -117,33 +119,37 @@ public partial class Player : Actor
     {
         Vector3 move = Vector3.zero;
         if (Input.GetKey(KeyCode.W)) move.z = 1;
-        if (Input.GetKey(KeyCode.S)) move.z = -1;
+        if (Input.GetKey(KeyCode.S)) move.z = -1;   // 누름
         if (Input.GetKey(KeyCode.A)) move.x = -1;
         if (Input.GetKey(KeyCode.D)) move.x = 1;
         if (move != Vector3.zero)
         {
             Vector3 relateMove;
-            relateMove = Camera.main.transform.forward * move.z;
+            relateMove = Camera.main.transform.forward * move.z; // 0, -1, 0
             relateMove += Camera.main.transform.right * move.x;
             relateMove.y = 0;
             move = relateMove;
 
-            move.Normalize();
+            move.Normalize(); // z : -1, x : 0
 
             float _speed = isFiring ? speedWhileShooting : speed;
             transform.Translate(move * _speed * Time.deltaTime, Space.World);
+
+            //* transform.forward 는 마우스 방향이다
+            if (Mathf.RoundToInt(transform.forward.x) == 1 || Mathf.RoundToInt(transform.forward.x) == -1)
+            {
+                animator.SetFloat("DirX", transform.forward.z * move.z);
+                animator.SetFloat("DirY", transform.forward.x * move.x);
+            }
+            else
+            {
+                animator.SetFloat("DirX", transform.forward.x * move.x);
+                animator.SetFloat("DirY", transform.forward.z * move.z);
+            }
         }
 
-        if (Mathf.RoundToInt(transform.forward.x) == 1 || Mathf.RoundToInt(transform.forward.x) == -1)
-        {
-            animator.SetFloat("DirX", transform.forward.z * move.z);
-            animator.SetFloat("DirY", transform.forward.x * move.x);
-        }
-        else
-        {
-            animator.SetFloat("DirX", transform.forward.x * move.x);
-            animator.SetFloat("DirY", transform.forward.z * move.z);
-        }
+        //animator.SetFloat("DirX", transform.forward.x);
+        //animator.SetFloat("DirY", transform.forward.z);
 
         animator.SetFloat("Speed", move.sqrMagnitude);
     }
