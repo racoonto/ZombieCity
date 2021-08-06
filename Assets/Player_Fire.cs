@@ -18,14 +18,32 @@ public partial class Player : Actor
             {
                 animator.SetBool("Fire", true);
                 shootDelayEndTime = Time.time + shootDelay;
-                IncreaseRecoil();
-                StartCoroutine(InstantiateBulletAndFlashBulletCo());
+                switch (currentWeapon.type)
+                {
+                    case WeaponInfo.WeaponType.Gun:
+                        IncreaseRecoil();
+                        StartCoroutine(InstantiateBulletAndFlashBulletCo());
+                        break;
+
+                    case WeaponInfo.WeaponType.Melee:
+                        //무기의 콜라이더를 활성화 하자.
+                        StartCoroutine(MeleeAttackCo());
+                        break;
+                }
             }
         }
         else
         {
             Endfiring();
         }
+    }
+
+    private IEnumerator MeleeAttackCo()
+    {
+        yield return new WaitForSeconds(currentWeapon.attackStartTime);
+        currentWeapon.attackCollider.enabled = true;
+        yield return new WaitForSeconds(currentWeapon.attackTime);
+        currentWeapon.attackCollider.enabled = false;
     }
 
     private void Endfiring()

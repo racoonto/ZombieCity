@@ -16,6 +16,7 @@ public partial class Player : Actor
     }
 
     public bool isFiring = false;
+
     public StateType stateType = StateType.Idle;
 
     public WeaponInfo currentWeapon;
@@ -31,9 +32,12 @@ public partial class Player : Actor
         weaponInfo.transform.localScale = currentWeapon.gameObject.transform.localScale;
         weaponInfo.transform.localPosition = currentWeapon.gameObject.transform.localPosition;
         weaponInfo.transform.localRotation = currentWeapon.gameObject.transform.localRotation;
+        currentWeapon = weaponInfo;
+        currentWeapon.attackCollider.enabled = false;
 
         bulletPosition = weaponInfo.bulletPosition;
-        bulletLight = weaponInfo.bulletLight.gameObject;
+        if (weaponInfo.bulletLight != null)
+            bulletLight = weaponInfo.bulletLight.gameObject;
         SetCinemachinCamera();
     }
 
@@ -178,4 +182,10 @@ public partial class Player : Actor
 
     public float speed = 5;
     public float speedWhileShooting = 3;
+
+    internal void OnZombieEnter(Collider other)
+    {
+        var zombie = other.GetComponent<Zombie>();
+        zombie.TakeHit(currentWeapon.damage, currentWeapon.gameObject.transform.forward);
+    }
 }
