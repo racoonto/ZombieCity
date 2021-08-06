@@ -4,6 +4,11 @@ using UnityEngine;
 
 public partial class Player : Actor
 {
+    public int bulletCountInClip; //탄창에 총알수
+    public int MaxBulletCountClip; //탄창에 들어가는 최대수
+    public int allBulletCount; //가진 전체 총알수
+    public float reloadTime = 1f;
+
     public GameObject bullet;
     public Transform bulletPosition;
 
@@ -11,11 +16,13 @@ public partial class Player : Actor
 
     private void Fire()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && bulletCountInClip > 0)
         {
             isFiring = true;
             if (shootDelayEndTime < Time.time)
             {
+                bulletCountInClip--;
+
                 animator.SetTrigger("StartFire");
 
                 shootDelayEndTime = Time.time + shootDelay;

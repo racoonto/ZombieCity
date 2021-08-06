@@ -3150,7 +3150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Path: {fileID: 1150326351}
-  m_PathPosition: -4.658478
+  m_PathPosition: -2.527727
   m_PositionUnits: 1
   m_PathOffset: {x: 0, y: 0, z: 0}
   m_XDamping: 0
@@ -5319,7 +5319,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1924290616}
-  m_LocalRotation: {x: 0.0027214137, y: 0.8888425, z: -0.45817435, w: 0.005279449}
+  m_LocalRotation: {x: 0.00272137, y: 0.8888425, z: -0.45817435, w: 0.0052793645}
   m_LocalPosition: {x: -17.418674, y: 0, z: -29.445572}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -6159,6 +6159,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 209221734709651207, guid: 415f03b10a1cf4c46b0a9ccecce28d4c, type: 3}
+      propertyPath: allBulletCount
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 209221734709651207, guid: 415f03b10a1cf4c46b0a9ccecce28d4c, type: 3}
+      propertyPath: bulletCountInClip
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 209221734709651207, guid: 415f03b10a1cf4c46b0a9ccecce28d4c, type: 3}
+      propertyPath: MaxBulletCountClip
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 209221734709651207, guid: 415f03b10a1cf4c46b0a9ccecce28d4c, type: 3}
       propertyPath: rightWeaponPosition
       value: 
       objectReference: {fileID: 6019563669605402003}
@@ -6432,6 +6444,10 @@ PrefabInstance:
     - target: {fileID: 7040432331553427629, guid: 7bcada194f4aa7d419981035220a3adb, type: 3}
       propertyPath: m_Name
       value: Zombie
+      objectReference: {fileID: 0}
+    - target: {fileID: 7040432331553427629, guid: 7bcada194f4aa7d419981035220a3adb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7bcada194f4aa7d419981035220a3adb, type: 3}

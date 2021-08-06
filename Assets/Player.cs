@@ -13,6 +13,7 @@ public partial class Player : Actor
         TakeHit,
         Roll,
         Die,
+        Reload,
     }
 
     public bool isFiring = false;
@@ -94,10 +95,34 @@ public partial class Player : Actor
             Move();
             Fire();
             Roll();
+            ReloadBullet();
 
             if (Input.GetKeyDown(KeyCode.Tab))
                 ToggleChangeWeapon();
         }
+    }
+
+    private void ReloadBullet()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            StartCoroutine(ReloadBulletCo());
+        }
+    }
+
+    private IEnumerator ReloadBulletCo()
+    {
+        stateType = StateType.Reload;
+
+        animator.SetTrigger("Reload");
+        yield return new WaitForSeconds(reloadTime);
+        stateType = StateType.Idle;
+
+        //bulletCountInClip = MaxBulletCountClip;
+
+        int reloadCount = Math.Min(allBulletCount, MaxBulletCountClip); // 더작은 숫자를 리턴
+        bulletCountInClip = reloadCount;
+        allBulletCount -= reloadCount;
     }
 
     private void Roll()
