@@ -169,13 +169,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13ebdd5d6ea86f94fb0ae11be07738de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   damage: 20
-  bullet: {fileID: 1638413364499047951, guid: b50715c6cc724a64b9e0924304064515, type: 3}
+  overrideAnimator: {fileID: 22100000, guid: 9371e6af84bdcc94faced10b013629c4, type: 2}
+  delay: 0.1
+  pushBackDistance: 0.1
+  maxBulletCount: 6
   bulletPosition: {fileID: 4630617002182385829}
   bulletLight: {fileID: 3726167151305534136}
-  overrideAnimator: {fileID: 22100000, guid: 9371e6af84bdcc94faced10b013629c4, type: 2}
-  delay: 0.2
-  maxBulletCount: 6
+  bullet: {fileID: 1638413364499047951, guid: b50715c6cc724a64b9e0924304064515, type: 3}
+  attackStartTime: 0.1
+  attackTime: 0.4
+  attackCollider: {fileID: 0}
 --- !u!1001 &8589188965737692753
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -246,6 +251,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b734dbf400193dd4fbd9baf59a89b534, type: 3}
       propertyPath: m_Name
       value: Gun
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b734dbf400193dd4fbd9baf59a89b534, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b734dbf400193dd4fbd9baf59a89b534, type: 3}

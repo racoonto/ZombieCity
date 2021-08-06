@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1423883088291797726}
   - component: {fileID: 6879565925043307892}
   - component: {fileID: 630179878}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AttackCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,8 +43,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 0
   serializedVersion: 2
-  m_Size: {x: 48.284786, y: 5.2589407, z: 7.616267}
-  m_Center: {x: -9.691931, y: -0.27587748, z: 0.056586742}
+  m_Size: {x: 1.2164928, y: 0.1725681, z: 0.16698277}
+  m_Center: {x: -0.2243691, y: 0.0056045116, z: 0.01319294}
 --- !u!114 &630179878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,7 +67,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5361693405157705868}
   - component: {fileID: 5361693405157705871}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -180,6 +180,10 @@ PrefabInstance:
     - target: {fileID: 4440936695980444475, guid: 6704785efa4a054468000da078da4791, type: 3}
       propertyPath: m_Name
       value: Mesh
+      objectReference: {fileID: 0}
+    - target: {fileID: 4440936695980444475, guid: 6704785efa4a054468000da078da4791, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6704785efa4a054468000da078da4791, type: 3}

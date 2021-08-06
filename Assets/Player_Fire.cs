@@ -23,12 +23,12 @@ public partial class Player : Actor
                 {
                     case WeaponInfo.WeaponType.Gun:
                         IncreaseRecoil();
-                        StartCoroutine(InstantiateBulletAndFlashBulletCo());
+                        currentWeapon.StartCoroutine(InstantiateBulletAndFlashBulletCo());
                         break;
 
                     case WeaponInfo.WeaponType.Melee:
                         //무기의 콜라이더를 활성화 하자.
-                        StartCoroutine(MeleeAttackCo());
+                        currentWeapon.StartCoroutine(MeleeAttackCo());
                         break;
                 }
             }
