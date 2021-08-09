@@ -105,9 +105,13 @@ MonoBehaviour:
   type: 1
   damage: 20
   overrideAnimator: {fileID: 22100000, guid: f4e489b46a3695b4ba971c15e83f206c, type: 2}
-  delay: 0.6
-  pushBackDistance: 1
-  maxBulletCount: 6
+  delay: 0.3
+  pushBackDistance: 13
+  bulletCountInClip: 1000
+  MaxBulletCountInClip: 1000
+  allBulletCount: 1000
+  maxBulletCount: 1000
+  reloadTime: 1
   bulletPosition: {fileID: 0}
   bulletLight: {fileID: 0}
   bullet: {fileID: 0}
