@@ -1193,7 +1193,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6497253999864036579
 Transform:
   m_ObjectHideFlags: 0
@@ -1221,11 +1221,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c35b1a2d08b83a4591cb1f5b0f60f61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 100
+  hp: 500000
   bloodEffectYPosition: 1.3
   bloodParticle: {fileID: 4664175202851573032, guid: bc8a46770fed89447ac6563c12527abc, type: 3}
+  damageColor: {r: 0.22228363, g: 0.6132076, b: 0, a: 1}
   isFiring: 0
   stateType: 0
+  mainWeapon: {fileID: 0}
+  subWeapon: {fileID: 0}
+  currentWeapon: {fileID: 0}
+  rightWeaponPosition: {fileID: 0}
   rollingSpeedAC:
     serializedVersion: 2
     m_Curve:
@@ -1269,8 +1274,13 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   rollingSpeedUserMultipy: 1
+  diePreDelayTime: 0.3
   speed: 5
   speedWhileShooting: 3
+  bulletCountInClip: 0
+  MaxBulletCountClip: 0
+  allBulletCount: 0
+  reloadTime: 1
   bullet: {fileID: 1638413364499047951, guid: b50715c6cc724a64b9e0924304064515, type: 3}
   bulletPosition: {fileID: 6497253999611402580}
   bulletFlashTime: 0.001

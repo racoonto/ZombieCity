@@ -27,12 +27,15 @@ public partial class Player : Actor
 
     public Transform rightWeaponPosition;
 
-    private void Awake()
+    new private void Awake()
     {
+        base.Awake();
         animator = GetComponentInChildren<Animator>();
         ChangeWeapon(mainWeapon);
 
         SetCinemachinCamera();
+        HealthUI.Instance.SetGauge(hp, maxHp);
+        AmmoUI.Instance.SetBulletCount(bulletCountInClip, MaxBulletCountClip, allBulletCount + bulletCountInClip, maxBulletCount);
     }
 
     private GameObject currentWeaponGo;
@@ -115,12 +118,14 @@ public partial class Player : Actor
         stateType = StateType.Reload;
 
         animator.SetTrigger("Reload");
+
+        int reloadCount = Math.Min(allBulletCount, MaxBulletCountClip); // 더작은 숫자를 리턴
+
+        AmmoUI.Instance.StartReload(reloadCount, MaxBulletCountClip, allBulletCount, maxBulletCount, reloadTime);
+
         yield return new WaitForSeconds(reloadTime);
         stateType = StateType.Idle;
 
-        //bulletCountInClip = MaxBulletCountClip;
-
-        int reloadCount = Math.Min(allBulletCount, MaxBulletCountClip); // 더작은 숫자를 리턴
         bulletCountInClip = reloadCount;
         allBulletCount -= reloadCount;
     }
@@ -217,7 +222,7 @@ public partial class Player : Actor
     new internal void TakeHit(int damage)
     {
         base.TakeHit(damage);
-
+        HealthUI.Instance.SetGauge(hp, maxHp);
         animator.SetTrigger("TakeHit");
 
         if (hp <= 0)
