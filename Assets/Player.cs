@@ -35,7 +35,13 @@ public partial class Player : Actor
 
         SetCinemachinCamera();
         HealthUI.Instance.SetGauge(hp, maxHp);
-        AmmoUI.Instance.SetBulletCount(bulletCountInClip, MaxBulletCountClip, allBulletCount + bulletCountInClip, maxBulletCount);
+
+        if (mainWeapon)
+            mainWeapon.Init();
+        if (subWeapon)
+            subWeapon.Init();
+
+        AmmoUI.Instance.SetBulletCount(BulletCountInClip, MaxBulletCountClip, allBulletCount + BulletCountInClip, maxBulletCount);
     }
 
     private GameObject currentWeaponGo;
@@ -58,7 +64,7 @@ public partial class Player : Actor
         if (currentWeapon.attackCollider)
             currentWeapon.attackCollider.enabled = false;
 
-        bulletPosition = weaponInfo.bulletPosition;
+        //bulletPosition = weaponInfo.bulletPosition;
         if (weaponInfo.bulletLight != null)
             bulletLight = weaponInfo.bulletLight.gameObject;
 
@@ -126,7 +132,7 @@ public partial class Player : Actor
         yield return new WaitForSeconds(reloadTime);
         stateType = StateType.Idle;
 
-        bulletCountInClip = reloadCount;
+        BulletCountInClip = reloadCount;
         allBulletCount -= reloadCount;
     }
 

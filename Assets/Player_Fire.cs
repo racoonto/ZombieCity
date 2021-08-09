@@ -4,28 +4,39 @@ using UnityEngine;
 
 public partial class Player : Actor
 {
-    public int bulletCountInClip = 2; //탄창에 총알수
-    public int MaxBulletCountClip = 6; //탄창에 들어가는 최대수
-    public int allBulletCount = 500; //가진 전체 총알수
-    public int maxBulletCount = 500; // 최대로 가질 수 있는 총알수
-    public float reloadTime = 1f;
+    public int BulletCountInClip //탄창에 총알수
+    {
+        get { return currentWeapon.bulletCountInClip; }
+        set { currentWeapon.bulletCountInClip = value; }
+    }
 
-    public GameObject bullet;
-    public Transform bulletPosition;
+    public int MaxBulletCountClip => currentWeapon.MaxBulletCountInClip; //탄창에 들어가는 최대수
+
+    public int allBulletCount //가진 전체 총알수
+    {
+        get => currentWeapon.allBulletCount;
+        set => currentWeapon.allBulletCount = value;
+    }
+
+    public int maxBulletCount => currentWeapon.maxBulletCount; // 최대로 가질 수 있는 총알수
+    public float reloadTime => currentWeapon.reloadTime;
+
+    public GameObject bullet => currentWeapon.bullet;
+    public Transform bulletPosition => currentWeapon.bulletPosition;
 
     private float shootDelayEndTime;
 
     private void Fire()
     {
-        if (Input.GetMouseButton(0) && bulletCountInClip > 0)
+        if (Input.GetMouseButton(0) && BulletCountInClip > 0)
         {
             isFiring = true;
             if (shootDelayEndTime < Time.time)
             {
-                bulletCountInClip--;
+                BulletCountInClip--;
 
                 animator.SetTrigger("StartFire");
-                AmmoUI.Instance.SetBulletCount(bulletCountInClip, MaxBulletCountClip, allBulletCount + bulletCountInClip, maxBulletCount);
+                AmmoUI.Instance.SetBulletCount(BulletCountInClip, MaxBulletCountClip, allBulletCount + BulletCountInClip, maxBulletCount);
 
                 shootDelayEndTime = Time.time + shootDelay;
                 switch (currentWeapon.type)
