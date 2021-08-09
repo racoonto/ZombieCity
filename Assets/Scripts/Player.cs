@@ -31,15 +31,16 @@ public partial class Player : Actor
     {
         base.Awake();
         animator = GetComponentInChildren<Animator>();
-        ChangeWeapon(mainWeapon);
-
-        SetCinemachinCamera();
-        HealthUI.Instance.SetGauge(hp, maxHp);
 
         if (mainWeapon)
             mainWeapon.Init();
         if (subWeapon)
             subWeapon.Init();
+
+        ChangeWeapon(mainWeapon);
+
+        SetCinemachinCamera();
+        HealthUI.Instance.SetGauge(hp, maxHp);
 
         AmmoUI.Instance.SetBulletCount(BulletCountInClip, MaxBulletCountClip, allBulletCount + BulletCountInClip, maxBulletCount);
     }
