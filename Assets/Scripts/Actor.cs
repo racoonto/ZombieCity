@@ -26,11 +26,18 @@ public class Actor : MonoBehaviour
 
     public static void CreateTextEffect(int number, Vector3 position, Color color)
     {
-        //GameObject memoryGo = (GameObject)Resources.Load("TextEffect");
-        GameObject go = (GameObject)Instantiate(Resources.Load("TextEffect"), position, Camera.main.transform.rotation);
-        //go.transform.LookAt(Camera.main.transform);
-        TextMeshPro textMeshPro = go.GetComponent<TextMeshPro>();
-        textMeshPro.text = number.ToNumber();
+        CreateTextEffect(number.ToNumber(), "TextEffect", position, color);
+    }
+
+    public static void CreateTextEffect(string str, string prefabName, Vector3 position
+        , Color color, Transform parent = null)
+    {
+        GameObject memoryGo = (GameObject)Resources.Load(prefabName);
+        GameObject go = Instantiate(memoryGo, position, Camera.main.transform.rotation);
+        if (parent)
+            go.transform.parent = parent;
+        TextMeshPro textMeshPro = go.GetComponentInChildren<TextMeshPro>();
+        textMeshPro.text = str;
         textMeshPro.color = color;
     }
 

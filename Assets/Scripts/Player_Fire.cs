@@ -4,52 +4,68 @@ using UnityEngine;
 
 public partial class Player : Actor
 {
-    public int BulletCountInClip //탄창에 총알수
+    public int BulletCountInClip
     {
-        get { return currentWeapon.bulletCountInClip; }
+        get { return currentWeapon.bulletCountInClip; }       // 탄창에 총알수
         set { currentWeapon.bulletCountInClip = value; }
     }
 
-    public int MaxBulletCountClip => currentWeapon.MaxBulletCountInClip; //탄창에 들어가는 최대수
+    public int MaxBulletCountInClip => currentWeapon.maxBulletCountInClip;  // 탄창에 들어가는 최대수
 
-    public int allBulletCount //가진 전체 총알수
+    public int AllBulletCount
     {
-        get => currentWeapon.allBulletCount;
+        get => currentWeapon.allBulletCount;              // 가진 전체 총알수.
         set => currentWeapon.allBulletCount = value;
     }
 
-    public int maxBulletCount => currentWeapon.maxBulletCount; // 최대로 가질 수 있는 총알수
-    public float reloadTime => currentWeapon.reloadTime;
+    public int MaxBulletCount => currentWeapon.maxBulletCount;              // 최대로 가질 수 있는 총알수.
+    public float ReloadTime => currentWeapon.reloadTime;
 
-    public GameObject bullet => currentWeapon.bullet;
-    public Transform bulletPosition => currentWeapon.bulletPosition;
+    public GameObject Bullet => currentWeapon.bullet;
+    public Transform BulletPosition => currentWeapon.bulletPosition;
 
     private float shootDelayEndTime;
 
     private void Fire()
     {
-        if (Input.GetMouseButton(0) && BulletCountInClip > 0)
+        if (Input.GetMouseButton(0))
         {
-            isFiring = true;
-            if (shootDelayEndTime < Time.time)
+            if (BulletCountInClip > 0)
             {
-                BulletCountInClip--;
-
-                animator.SetTrigger("StartFire");
-                AmmoUI.Instance.SetBulletCount(BulletCountInClip, MaxBulletCountClip, allBulletCount + BulletCountInClip, maxBulletCount);
-
-                shootDelayEndTime = Time.time + shootDelay;
-                switch (currentWeapon.type)
+                isFiring = true;
+                if (shootDelayEndTime < Time.time)
                 {
-                    case WeaponInfo.WeaponType.Gun:
-                        IncreaseRecoil();
-                        currentWeapon.StartCoroutine(InstantiateBulletAndFlashBulletCo());
-                        break;
+                    BulletCountInClip--;
+                    animator.SetTrigger("StartFire");
+                    //animator.SetBool("Fire", true);
+                    AmmoUI.Instance.SetBulletCount(BulletCountInClip
+                        , MaxBulletCountInClip
+                        , AllBulletCount + BulletCountInClip
+                        , MaxBulletCount);
 
-                    case WeaponInfo.WeaponType.Melee:
-                        //무기의 콜라이더를 활성화 하자.
-                        currentWeapon.StartCoroutine(MeleeAttackCo());
-                        break;
+                    shootDelayEndTime = Time.time + shootDelay;
+                    switch (currentWeapon.type)
+                    {
+                        case WeaponInfo.WeaponType.Gun:
+                            IncreaseRecoil();
+                            currentWeapon.StartCoroutine(InstantiateBulletAndFlashBulletCo());
+                            break;
+
+                        case WeaponInfo.WeaponType.Melee:
+                            // 무기의 컬라이더를 활성화 하자.
+                            currentWeapon.StartCoroutine(MeleeAttackCo());
+                            break;
+                    }
+                }
+            }
+            else
+            {
+                if (reloadAlertDelayEndTime < Time.time)
+                {
+                    reloadAlertDelayEndTime = Time.time + reloadAlertDelay;
+                    // 리로드 글자 표시하자.
+                    CreateTextEffect("Reload!", "TalkEffect", transform.position
+                        , Color.white, transform);
                 }
             }
         }
@@ -58,6 +74,9 @@ public partial class Player : Actor
             Endfiring();
         }
     }
+
+    [SerializeField] private float reloadAlertDelay = 1f;
+    private float reloadAlertDelayEndTime;
 
     private IEnumerator MeleeAttackCo()
     {
@@ -80,7 +99,7 @@ public partial class Player : Actor
     private IEnumerator InstantiateBulletAndFlashBulletCo()
     {
         yield return null; // 총쏘는 애니메이션 시작후에 총알 발사하기 위해서 1Frame쉼
-        GameObject bulletGo = Instantiate(bullet, bulletPosition.position, CalculateRecoil(transform.rotation));
+        GameObject bulletGo = Instantiate(Bullet, BulletPosition.position, CalculateRecoil(transform.rotation));
         bulletGo.GetComponent<Bullet>().pushBackDistance = currentWeapon.pushBackDistance;
 
         bulletLight.SetActive(true);

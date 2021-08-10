@@ -17,32 +17,31 @@ public partial class Player : Actor
     }
 
     public bool isFiring = false;
-
     public StateType stateType = StateType.Idle;
 
     public WeaponInfo mainWeapon;
     public WeaponInfo subWeapon;
 
     public WeaponInfo currentWeapon;
-
     public Transform rightWeaponPosition;
 
     new private void Awake()
     {
         base.Awake();
         animator = GetComponentInChildren<Animator>();
-
         InitWeapon(mainWeapon);
         InitWeapon(subWeapon);
-        //if (subWeapon)
-        //    subWeapon.Init();
 
         ChangeWeapon(mainWeapon);
 
         SetCinemachinCamera();
+
         HealthUI.Instance.SetGauge(hp, maxHp);
 
-        AmmoUI.Instance.SetBulletCount(BulletCountInClip, MaxBulletCountClip, allBulletCount + BulletCountInClip, maxBulletCount);
+        AmmoUI.Instance.SetBulletCount(BulletCountInClip
+            , MaxBulletCountInClip
+            , AllBulletCount + BulletCountInClip
+            , MaxBulletCount);
     }
 
     private void InitWeapon(WeaponInfo weaponInfo)
@@ -66,7 +65,6 @@ public partial class Player : Actor
         //rightWeaponPosition 부모
         var weaponInfo = Instantiate(currentWeapon, rightWeaponPosition);
         currentWeaponGo = weaponInfo.gameObject;
-
         weaponInfo.transform.localScale = currentWeapon.gameObject.transform.localScale;
         weaponInfo.transform.localPosition = currentWeapon.gameObject.transform.localPosition;
         weaponInfo.transform.localRotation = currentWeapon.gameObject.transform.localRotation;
@@ -76,18 +74,10 @@ public partial class Player : Actor
             currentWeapon.attackCollider.enabled = false;
 
         //bulletPosition = weaponInfo.bulletPosition;
+
         if (weaponInfo.bulletLight != null)
             bulletLight = weaponInfo.bulletLight.gameObject;
-
         shootDelay = currentWeapon.delay;
-    }
-
-    private bool toggleWeapon = false;
-
-    private void ToggleChangeWeapon()
-    {
-        ChangeWeapon((toggleWeapon == true ? mainWeapon : subWeapon));
-        toggleWeapon = !toggleWeapon;
     }
 
     [ContextMenu("SetCinemachinCamera")]
@@ -116,7 +106,6 @@ public partial class Player : Actor
             Fire();
             Roll();
             ReloadBullet();
-
             if (Input.GetKeyDown(KeyCode.Tab))
                 ToggleChangeWeapon();
         }
@@ -133,18 +122,26 @@ public partial class Player : Actor
     private IEnumerator ReloadBulletCo()
     {
         stateType = StateType.Reload;
-
         animator.SetTrigger("Reload");
+        int reloadCount = Math.Min(AllBulletCount, MaxBulletCountInClip);
 
-        int reloadCount = Math.Min(allBulletCount, MaxBulletCountClip); // 더작은 숫자를 리턴
-
-        AmmoUI.Instance.StartReload(reloadCount, MaxBulletCountClip, allBulletCount, maxBulletCount, reloadTime);
-
-        yield return new WaitForSeconds(reloadTime);
+        AmmoUI.Instance.StartReload(reloadCount
+            , MaxBulletCountInClip
+            , AllBulletCount
+            , MaxBulletCount
+            , ReloadTime);
+        yield return new WaitForSeconds(ReloadTime);
         stateType = StateType.Idle;
-
         BulletCountInClip = reloadCount;
-        allBulletCount -= reloadCount;
+        AllBulletCount -= reloadCount;
+    }
+
+    private bool toggleWeapon = false;
+
+    private void ToggleChangeWeapon()
+    {
+        ChangeWeapon(toggleWeapon == true ? mainWeapon : subWeapon);
+        toggleWeapon = !toggleWeapon;
     }
 
     private void Roll()
@@ -261,9 +258,11 @@ public partial class Player : Actor
     public float speed = 5;
     public float speedWhileShooting = 3;
 
-    internal void OnZombieEnter(Collider other)
+    public void OnZombieEnter(Collider other)
     {
         var zombie = other.GetComponent<Zombie>();
-        zombie.TakeHit(currentWeapon.damage, currentWeapon.gameObject.transform.forward, currentWeapon.pushBackDistance);
+        zombie.TakeHit(currentWeapon.damage
+            , currentWeapon.gameObject.transform.forward
+            , currentWeapon.pushBackDistance);
     }
 }

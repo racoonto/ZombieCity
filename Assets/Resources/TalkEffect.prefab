@@ -262,6 +262,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6314688804357399730}
   - component: {fileID: 3880543210984486753}
+  - component: {fileID: -1188400857407719988}
   m_Layer: 7
   m_Name: TalkEffect
   m_TagString: Untagged
@@ -297,3 +298,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf534df38be3e5f47ad9ce70ece1acfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-1188400857407719988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8869120228747612720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95737d8fd37c2204abca9dbb93c56a06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyTime: 2
+  OnEnableLog: 0
+  OnDisableLog: 0
+  OnDestroyLog: 0
+  StopOnLog: 0
