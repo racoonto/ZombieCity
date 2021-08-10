@@ -11,9 +11,11 @@ public class Zombie : Actor
     public Transform target;
     private NavMeshAgent agent;
     private float originalSpeed;
+    public static List<Zombie> Zombies = new List<Zombie>();
 
     private IEnumerator Start()
     {
+        Zombies.Add(this);
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
         target = FindObjectOfType<Player>().transform;  //
@@ -153,6 +155,8 @@ public class Zombie : Actor
 
         if (hp <= 0)
         {
+            Zombies.Remove(this);
+            FindObjectOfType<Player>().RetargetingLookat();
             GetComponent<Collider>().enabled = false;
             animator.SetBool("Die", true);
         }

@@ -46,25 +46,50 @@ public partial class Player : Actor
             , MaxBulletCount);
     }
 
-    private IEnumerator Start()
+    private Coroutine settingLookAtTargetCoHandle;
+
+    private void Start()
+    {
+        settingLookAtTargetCoHandle = StartCoroutine(SettingLookAtTargetCo());
+    }
+
+    private IEnumerator SettingLookAtTargetCo()
     {
         MultiAimConstraint multiAimConstraint = GetComponentInChildren<MultiAimConstraint>();
         RigBuilder rigBuilder = GetComponentInChildren<RigBuilder>();
         while (stateType != StateType.Die)
         {
-            List<Zombie> allZombie = new List<Zombie>(FindObjectsOfType<Zombie>()); //원래 잘 안쓰는 코드
-            if (allZombie.Count > 0)
+            List<Zombie> allZombies = Zombie.Zombies;
+            Transform lastTarget = null;
+            if (allZombies.Count > 0)
             {
-                var nearestZombie = allZombie.OrderBy(x => Vector3.Distance(x.transform.position, transform.position)).First();
+                var nearestZombie = allZombies.OrderBy(x => Vector3.Distance(x.transform.position, transform.position))
+                    .First();
 
-                var array = multiAimConstraint.data.sourceObjects;
-                array.Clear();
-                array.Add(new WeightedTransform(nearestZombie.transform, 1));
-                multiAimConstraint.data.sourceObjects = array;
-                rigBuilder.Build();
+                if (lastTarget != nearestZombie.transform)
+                {
+                    lastTarget = nearestZombie.transform;
+                    var array = multiAimConstraint.data.sourceObjects;
+                    array.Clear();
+                    array.Add(new WeightedTransform(lastTarget, 1));
+                    multiAimConstraint.data.sourceObjects = array;
+                    rigBuilder.Build();
+                }
             }
+
             yield return new WaitForSeconds(1);
         }
+    }
+
+    internal void RetargetingLookat()
+    {
+        MultiAimConstraint multiAimConstraint = GetComponentInChildren<MultiAimConstraint>();
+        multiAimConstraint.data.sourceObjects = new WeightedTransformArray();
+        // multiAimConstraint.data.sourceObjects.Clear()시 실패했음. 이유모름.
+        GetComponentInChildren<RigBuilder>().Build();
+
+        StopCoroutine(settingLookAtTargetCoHandle);
+        settingLookAtTargetCoHandle = StartCoroutine(SettingLookAtTargetCo());
     }
 
     private void InitWeapon(WeaponInfo weaponInfo)
