@@ -203,7 +203,8 @@ public class Zombie : Actor
         }
 
         dieMaterial.SetFloat("_Progress", 1);
-        DOTween.To(() => 1f, (x) => dieMaterial.SetFloat("_Progress", x), 0.14f, dieMaterialDuration).SetDelay(onDieDestroyDelay).OnComplete(() => Destroy(gameObject));
+        DOTween.To(() => 1f, (x) => dieMaterial.SetFloat("_Progress", x), 0.14f, dieMaterialDuration)
+            .SetDelay(onDieDestroyDelay).OnComplete(() => Destroy(gameObject));
 
         //dieMaterial.SetFloat("_Progress", 0.5f);
 
