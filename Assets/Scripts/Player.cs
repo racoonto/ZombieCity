@@ -236,7 +236,8 @@ public partial class Player : Actor
         {
             Vector3 hitPoint = ray.GetPoint(enter);
             Vector3 dir = hitPoint - transform.position;
-            dir.y = transform.position.y;
+            dir.y = 0;
+            //dir.y = transform.position.y;
             dir.Normalize();
             transform.forward = dir;
         }
@@ -262,17 +263,29 @@ public partial class Player : Actor
             float _speed = isFiring ? speedWhileShooting : speed;
             transform.Translate(move * _speed * Time.deltaTime, Space.World);
 
-            //* transform.forward 는 마우스 방향이다
-            if (Mathf.RoundToInt(transform.forward.x) == 1 || Mathf.RoundToInt(transform.forward.x) == -1)
-            {
-                animator.SetFloat("DirX", transform.forward.z * move.z);
-                animator.SetFloat("DirY", transform.forward.x * move.x);
-            }
-            else
-            {
-                animator.SetFloat("DirX", transform.forward.x * move.x);
-                animator.SetFloat("DirY", transform.forward.z * move.z);
-            }
+            //뱡향을 앵글로 전환하기
+            //앵글을 방향으로 전환하기
+            float forwardAngle = transform.forward.VectorToDegree(); //0~360각도
+            float moveDegree = move.VectorToDegree(); // 방향 -> 앵글
+            float dirRadian = (moveDegree - forwardAngle + 90) * Mathf.PI / 180; // 0~360; 앵글을 라디안으로
+            Vector3 dir;
+            dir.x = Mathf.Cos(dirRadian);
+            dir.z = Mathf.Sin(dirRadian);
+
+            animator.SetFloat("DirX", dir.x);
+            animator.SetFloat("DirY", dir.z);
+
+            ////* transform.forward 는 마우스 방향이다
+            //if (Mathf.RoundToInt(transform.forward.x) == 1 || Mathf.RoundToInt(transform.forward.x) == -1)
+            //{
+            //    animator.SetFloat("DirX", transform.forward.z * move.z);
+            //    animator.SetFloat("DirY", transform.forward.x * move.x);
+            //}
+            //else
+            //{
+            //    animator.SetFloat("DirX", transform.forward.x * move.x);
+            //    animator.SetFloat("DirY", transform.forward.z * move.z);
+            //}
         }
 
         //animator.SetFloat("DirX", transform.forward.x);

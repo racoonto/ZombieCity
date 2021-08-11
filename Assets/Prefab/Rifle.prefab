@@ -26,6 +26,7 @@ Transform:
   m_LocalRotation: {x: -0.02547121, y: -0.11610173, z: -0.017640462, w: 0.992754}
   m_LocalPosition: {x: 13.661853, y: -13.573597, z: -14.793183}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7359775415041799063}
   m_RootOrder: 1
@@ -57,6 +58,7 @@ Transform:
   m_LocalRotation: {x: -0.02547121, y: -0.11610173, z: -0.017640462, w: 0.992754}
   m_LocalPosition: {x: 13.661853, y: -13.573597, z: -14.793183}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7359775415041799063}
   m_RootOrder: 2
@@ -150,6 +152,7 @@ Transform:
   m_LocalRotation: {x: 0.1253797, y: -0.7257975, z: 0.5583895, w: -0.38170567}
   m_LocalPosition: {x: -5.064989, y: 0.91781485, z: -2.6018062}
   m_LocalScale: {x: 1, y: 0.9999876, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8122335000537504186}
   - {fileID: 4630617002182385829}
@@ -174,14 +177,14 @@ MonoBehaviour:
   overrideAnimator: {fileID: 22100000, guid: 9371e6af84bdcc94faced10b013629c4, type: 2}
   delay: 0.1
   pushBackDistance: 0.3
-  bulletCountInClip: 10
-  MaxBulletCountInClip: 60
+  bulletCountInClip: 30
+  maxBulletCountInClip: 30
   allBulletCount: 300
   maxBulletCount: 300
   reloadTime: 1
+  bullet: {fileID: 1638413364499047951, guid: b50715c6cc724a64b9e0924304064515, type: 3}
   bulletPosition: {fileID: 4630617002182385829}
   bulletLight: {fileID: 3726167151305534136}
-  bullet: {fileID: 1638413364499047951, guid: b50715c6cc724a64b9e0924304064515, type: 3}
   attackStartTime: 0.1
   attackTime: 0.4
   attackCollider: {fileID: 0}
