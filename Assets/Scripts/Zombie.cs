@@ -156,6 +156,10 @@ public class Zombie : Actor
         if (hp <= 0)
         {
             Zombies.Remove(this);
+
+            if (Zombies.Count == 0)
+                SpawnMamager.Instance.OnClearAllMonster();
+
             FindObjectOfType<Player>().RetargetingLookat();
             GetComponent<Collider>().enabled = false;
             animator.SetBool("Die", true);

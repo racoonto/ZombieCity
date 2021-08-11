@@ -1222,14 +1222,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f896e755618935946bb5e34ae9f5a94d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  completeUiInite: 0
   currentWaveIndex: 0
   waves:
-  - spawnCount: 10
+  - spawnCount: 3
     monster: {fileID: 7040432331553427629, guid: 7bcada194f4aa7d419981035220a3adb, type: 3}
-    time: 20
+    time: 30
   - spawnCount: 15
     monster: {fileID: 7040432331553427629, guid: 7bcada194f4aa7d419981035220a3adb, type: 3}
-    time: 20
+    time: 30
+  - spawnCount: 20
+    monster: {fileID: 7040432331553427629, guid: 7bcada194f4aa7d419981035220a3adb, type: 3}
+    time: 30
 --- !u!4 &367188696
 Transform:
   m_ObjectHideFlags: 0
@@ -3848,7 +3852,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.43224397, y: -0.004918678, z: 0.0023577402, w: 0.9017402}
-  m_LocalPosition: {x: -24.965548, y: 7.721159, z: -8.301758}
+  m_LocalPosition: {x: -25.193647, y: 7.721159, z: -27.712318}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4188,7 +4192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Path: {fileID: 1150326351}
-  m_PathPosition: -2.203449
+  m_PathPosition: -4.230638
   m_PositionUnits: 1
   m_PathOffset: {x: 0, y: 0, z: 0}
   m_XDamping: 0
@@ -5630,7 +5634,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Path: {fileID: 1199210193}
-  m_PathPosition: 26.26831
+  m_PathPosition: 6.856409
   m_PositionUnits: 1
   m_PathOffset: {x: 0, y: 0, z: 0}
   m_XDamping: 0
@@ -6225,6 +6229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 609f7691a20707e4b88d1b30983298ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  completeUiInite: 0
   dayColor: {r: 1, g: 0.9750765, b: 0.9198113, a: 0}
   nightColor: {r: 0.19607843, g: 0.19215687, b: 0.34117648, a: 1}
   changeDuration: 3
@@ -6676,7 +6681,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Path: {fileID: 762146558}
-  m_PathPosition: -9.961949
+  m_PathPosition: -10
   m_PositionUnits: 1
   m_PathOffset: {x: 0, y: 0, z: 0}
   m_XDamping: 0
@@ -6777,7 +6782,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Path: {fileID: 507610357}
-  m_PathPosition: 0.2347784
+  m_PathPosition: -4.352765
   m_PositionUnits: 1
   m_PathOffset: {x: 0, y: 0, z: 0}
   m_XDamping: 0

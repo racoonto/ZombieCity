@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnMamager : MonoBehaviour
+public class SpawnMamager : SingletonMonoBehavior<SpawnMamager>
 {
     public int currentWaveIndex;
 
@@ -26,6 +26,13 @@ public class SpawnMamager : MonoBehaviour
 
     public List<WaveInfo> waves;
 
+    private float nextWaveStartTime;
+
+    public void OnClearAllMonster()
+    {
+        nextWaveStartTime = 0;
+    }
+
     private IEnumerator Start()
     {
         var spawnPoints = GetComponentsInChildren<SpawnPoint>(true);
@@ -42,10 +49,12 @@ public class SpawnMamager : MonoBehaviour
                 Vector3 spawnPoint = spawnPoints[spawnIndex].transform.position;
                 Instantiate(item.monster, spawnPoint, Quaternion.identity);
             }
-            float nextWaveStartTime = Time.time + item.time;
+            nextWaveStartTime = Time.time + item.time;
 
             while (Time.time < nextWaveStartTime)
                 yield return null;
+
+            LightManager.Instance.ToggleLight();
         }
     }
 }

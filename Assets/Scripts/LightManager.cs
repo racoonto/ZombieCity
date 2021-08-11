@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LightManager : MonoBehaviour
+public class LightManager : SingletonMonoBehavior<LightManager>
 {
     // 환경관
     public Color dayColor;
@@ -55,6 +55,24 @@ public class LightManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha6))
             ChangeNightLight();
+
+        if (Input.GetKeyDown(KeyCode.Alpha7))
+            ToggleLight();
+    }
+
+    private bool isDay = true;
+
+    public void ToggleLight()
+    {
+        if (isDay)
+        {
+            ChangeNightLight();
+        }
+        else
+        {
+            ChangeDayLight();
+        }
+        isDay = !isDay;
     }
 
     private Dictionary<Light, float> allLight;// = new Dictionary<Light, float>();
