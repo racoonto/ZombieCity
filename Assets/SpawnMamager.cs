@@ -1,25 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class SpawnMamager : SingletonMonoBehavior<SpawnMamager>
 {
     public int currentWaveIndex;
 
-    //[System.Serializable]
-    //public class RegenInfo
-    //{
-    //    public GameObject monster;
-    //    public float ratio;
-    //}
+    [System.Serializable]
+    public class RegenMonsterInfo
+    {
+        public GameObject monster;
+        public float ratio;
+    }
 
     [System.Serializable]
     public class WaveInfo
     {
         public int spawnCount = 10;
 
-        //public List<RegenInfo> monster;
-        public GameObject monster;
+        public List<RegenMonsterInfo> monsters;
+        //public GameObject monster;
 
         public float time;
     }
@@ -32,6 +33,8 @@ public class SpawnMamager : SingletonMonoBehavior<SpawnMamager>
     {
         nextWaveStartTime = 0;
     }
+
+    public float randomRegionDelayMax = 0.5f;
 
     private IEnumerator Start()
     {
@@ -47,7 +50,9 @@ public class SpawnMamager : SingletonMonoBehavior<SpawnMamager>
             {
                 int spawnIndex = Random.Range(0, spawnPoints.Length);
                 Vector3 spawnPoint = spawnPoints[spawnIndex].transform.position;
-                Instantiate(item.monster, spawnPoint, Quaternion.identity);
+                var monster = item.monsters.OrderBy(x => Random.Range(0, x.ratio)).Last().monster;
+                Instantiate(monster, spawnPoint, Quaternion.identity);
+                yield return new WaitForSeconds(Random.Range(0, randomRegionDelayMax));
             }
             nextWaveStartTime = Time.time + item.time;
 
