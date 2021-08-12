@@ -27,11 +27,13 @@ public partial class Player : Actor
 
     public WeaponInfo currentWeapon;
     public Transform rightWeaponPosition;
+    private AudioSource audioSource;
 
     new private void Awake()
     {
         base.Awake();
         animator = GetComponentInChildren<Animator>();
+        audioSource = GetComponent<AudioSource>();
         InitWeapon(mainWeapon);
         InitWeapon(subWeapon);
 
@@ -301,6 +303,7 @@ public partial class Player : Actor
         //animator.SetFloat("DirX", transform.forward.x);
         //animator.SetFloat("DirY", transform.forward.z);
 
+        audioSource.enabled = move.sqrMagnitude > 0;
         animator.SetFloat("Speed", move.sqrMagnitude);
     }
 

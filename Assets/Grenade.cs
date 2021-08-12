@@ -25,5 +25,6 @@ public class Grenade : MonoBehaviour
 
         //폭발 이펙트 표시
         Instantiate(destroyEffect, transform.position, Quaternion.identity);
+        Destroy(gameObject);
     }
 }

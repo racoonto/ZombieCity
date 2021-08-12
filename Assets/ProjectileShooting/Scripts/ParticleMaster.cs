@@ -7,17 +7,17 @@ using System.Collections.Generic;
 /// the object will self-destruct, or alternatively if an audio source is playing will self-destruct after both it
 /// and the particle systems have finished playing
 /// </summary>
-public class ParticleMaster : MonoBehaviour {
+public class ParticleMaster : MonoBehaviour
+{
+    [SerializeField]
+    private bool waitForAudioSource = true;
 
     [SerializeField]
-    bool waitForAudioSource = true;
-
-    [SerializeField]
-    bool emitOnAwake = true;
+    private bool emitOnAwake = true;
 
     private List<ParticleSystem> particles;
 
-    void Awake()
+    private void Awake()
     {
         particles = new List<ParticleSystem>();
 
@@ -38,7 +38,9 @@ public class ParticleMaster : MonoBehaviour {
         {
             foreach (var particle in particles)
             {
-                particle.enableEmission = false;
+                var emission = particle.emission;
+                emission.enabled = false;
+                //particle.enableEmission = false;
             }
         }
     }
@@ -47,7 +49,9 @@ public class ParticleMaster : MonoBehaviour {
     {
         foreach (var particle in particles)
         {
-            particle.enableEmission = true;
+            //particle.enableEmission = true;
+            var emission = particle.emission;
+            emission.enabled = true;
         }
     }
 
@@ -55,11 +59,13 @@ public class ParticleMaster : MonoBehaviour {
     {
         foreach (var particle in particles)
         {
-            particle.loop = emit;
+            var main = particle.main;
+            main.loop = emit;
+            //particle.loop = emit;
         }
     }
 
-    void Update()
+    private void Update()
     {
         if (waitForAudioSource && GetComponent<AudioSource>() && GetComponent<AudioSource>().isPlaying)
             return;

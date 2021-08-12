@@ -166,6 +166,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   iterations: 20
   errorColor: {r: 1, g: 0, b: 0, a: 0}
+  _speed: 1
 --- !u!114 &301625723
 MonoBehaviour:
   m_ObjectHideFlags: 0

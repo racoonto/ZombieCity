@@ -376,6 +376,7 @@ GameObject:
   - component: {fileID: 1057073723277063422}
   - component: {fileID: 8653048556198376405}
   - component: {fileID: 4413722014262726747}
+  - component: {fileID: 6657127086644617537}
   m_Layer: 7
   m_Name: NewSoldier
   m_TagString: Player
@@ -536,6 +537,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5db18ee9ce21a634c9f0c3bc0da0df95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!81 &6657127086644617537
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 161081659696159752}
+  m_Enabled: 1
 --- !u!114 &1320307604
 MonoBehaviour:
   m_ObjectHideFlags: 0

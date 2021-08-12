@@ -83,7 +83,7 @@ public partial class Player : Actor
     private IEnumerator ThrowAttackCo()
     {
         currentWeapon.GetComponentInChildren<GrenadeLauncher>().ThrowObject();
-
+        //currentWeapon.GetComponentInChildren<>
         yield return null;
     }
 
