@@ -180,6 +180,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectileArc: {fileID: 0}
   firePoint: {fileID: 0}
-  currentAngle: 0
   cursor: {fileID: 0}
   speed: 7
+  torque: 100
+  grenadeGo: {fileID: 7973046211533587367, guid: d0c6886c8fbc1d645a0220de6517138f, type: 3}
+  currentAngle: 0
