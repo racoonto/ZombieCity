@@ -28,6 +28,7 @@ public partial class Player : Actor
     public WeaponInfo currentWeapon;
     public Transform rightWeaponPosition;
     private AudioSource audioSource;
+    public GameObject reloadSound;
 
     new private void Awake()
     {
@@ -181,6 +182,8 @@ public partial class Player : Actor
 
     private IEnumerator ReloadBulletCo()
     {
+        AudioSource reloadaudio = reloadSound.GetComponent<AudioSource>();
+        reloadaudio.enabled = true;
         stateType = StateType.Reload;
         animator.SetTrigger("Reload");
         int reloadCount = Math.Min(AllBulletCount, MaxBulletCountInClip);
@@ -194,6 +197,7 @@ public partial class Player : Actor
         stateType = StateType.Idle;
         BulletCountInClip = reloadCount;
         AllBulletCount -= reloadCount;
+        reloadaudio.enabled = false;
     }
 
     //private bool toggleWeapon = false;
