@@ -1,25 +1,33 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-public class ProjectileArc : MonoBehaviour 
+public class ProjectileArc : MonoBehaviour
 {
     [SerializeField]
-    int iterations = 20;
+    private int iterations = 20;
 
     [SerializeField]
-    Color errorColor;
+    private Color errorColor;
 
     private Color initialColor;
     private LineRenderer lineRenderer;
 
-    void Awake()
+    private void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
         initialColor = lineRenderer.material.color;
     }
 
+    //public Vector3 offsetPosition = new Vector3(0.3f,0.5f,0.1f);
+
     public void UpdateArc(float speed, float distance, float gravity, float angle, Vector3 direction, bool valid)
     {
-        Vector2[] arcPoints = ProjectileMath.ProjectileArcPoints(iterations, speed, distance, gravity, angle);        
+        var parent = transform.parent;
+        transform.parent = null;
+        transform.localScale = Vector3.one;
+        //transform.rotation = Quaternion.identity;
+        transform.parent = parent;
+
+        Vector2[] arcPoints = ProjectileMath.ProjectileArcPoints(iterations, speed, distance, gravity, angle);
         Vector3[] points3d = new Vector3[arcPoints.Length];
 
         for (int i = 0; i < arcPoints.Length; i++)

@@ -1,9 +1,9 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Cursor : MonoBehaviour 
-{    
-	void Update () 
-	{
+public class Cursor : MonoBehaviour
+{
+    private void Update()
+    {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         RaycastHit hit;
@@ -11,5 +11,7 @@ public class Cursor : MonoBehaviour
         {
             transform.position = hit.point;
         }
-	}
+
+        transform.rotation = Quaternion.identity;
+    }
 }

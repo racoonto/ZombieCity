@@ -13,6 +13,7 @@ public class WeaponInfo : MonoBehaviour
     {
         Gun,
         Melee, // 근접공격. 총알,...없음
+        Throw, // 수류탄, 연막탄
     }
 
     public WeaponType type;
@@ -49,4 +50,7 @@ public class WeaponInfo : MonoBehaviour
 
     public float attackTime = 0.4f;
     public Collider attackCollider;
+
+    [Header("투척무기")]
+    public GameObject throwGo;
 }

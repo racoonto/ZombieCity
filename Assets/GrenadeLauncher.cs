@@ -13,26 +13,43 @@ public class GrenadeLauncher : MonoBehaviour
     {
         projectileArc = GetComponent<ProjectileArc>();
         firePoint = transform;
-        cursor = FindObjectOfType<Cursor>();
+        //cursor = FindObjectOfType<Cursor>();
     }
 
     private void Update()
     {
         SetTargetWithSpeed(cursor.transform.position, speed);
 
-        // 수류탄 발사
-        if (Input.GetKeyDown(KeyCode.Mouse1))
-        {
-            //수류탄 생성.
-            //리지드 바디에 포스를 줘서 날리자.
-            var newGrenadeGo = Instantiate(grenadeGo, firePoint.position, Quaternion.identity);
-            newGrenadeGo.transform.forward = direction;
-            float degree = -currentAngle * Mathf.Rad2Deg;
-            newGrenadeGo.transform.Rotate(degree, 0, degree);
-            Rigidbody _rigidbody = newGrenadeGo.GetComponent<Rigidbody>();
-            _rigidbody.velocity = newGrenadeGo.transform.forward * speed;
-            _rigidbody.AddTorque(Random.Range(0, torque), Random.Range(0, torque), Random.Range(0, torque));
-        }
+        //// 수류탄 발사
+        //if (Input.GetKeyDown(KeyCode.Mouse1))
+        //{
+        //    ThrowObject();
+        //}
+    }
+
+    public void ThrowObject()
+    {
+        //수류탄 생성.
+        //리지드 바디에 포스를 줘서 날리자.
+        var newGrenadeGo = Instantiate(grenadeGo, firePoint.position, Quaternion.identity);
+        newGrenadeGo.transform.forward = direction;
+        float degree = -currentAngle * Mathf.Rad2Deg;
+        newGrenadeGo.transform.Rotate(degree, 0, degree);
+        Rigidbody _rigidbody = newGrenadeGo.GetComponent<Rigidbody>();
+        _rigidbody.velocity = newGrenadeGo.transform.forward * speed;
+        _rigidbody.AddTorque(Random.Range(0, torque), Random.Range(0, torque), Random.Range(0, torque));
+
+        StartCoroutine(ProjectileArcOffAndOnCo());
+    }
+
+    public float offTime = 0.5f;
+
+    private IEnumerator ProjectileArcOffAndOnCo()
+    {
+        var lineRender = GetComponentInChildren<LineRenderer>();
+        lineRender.enabled = false;
+        yield return new WaitForSeconds(offTime);
+        lineRender.enabled = true;
     }
 
     public float torque = 100;
