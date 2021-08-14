@@ -253,7 +253,7 @@ MonoBehaviour:
   bloodParticle: {fileID: 4664175202851573032, guid: bc8a46770fed89447ac6563c12527abc, type: 3}
   damageColor: {r: 1, g: 1, b: 1, a: 1}
   target: {fileID: 0}
-  attackDistance: 1.18
+  attackDistance: 2.5
   attackTime: 0.4
   attackAnimationTime: 0.8
   attackCollider: {fileID: 2872922846922280699}
@@ -354,13 +354,23 @@ MonoBehaviour:
   audios:
   - clip: {fileID: 8300000, guid: 27b98a8c68f991b408c5c6afff25358c, type: 3}
     ratio: 1
+    minVolume: 1
+    maxVolume: 1
   - clip: {fileID: 8300000, guid: 5ce6bb262e363834db2b5cdef8a21155, type: 3}
     ratio: 1
+    minVolume: 1
+    maxVolume: 1
   - clip: {fileID: 8300000, guid: bdb798b20d5ac2f438f3a562f4150019, type: 3}
     ratio: 1
+    minVolume: 1
+    maxVolume: 1
   - clip: {fileID: 8300000, guid: 821b6440d8e269c40b5a0eb8a44a079d, type: 3}
     ratio: 1
+    minVolume: 1
+    maxVolume: 1
   maxRandomTime: 30
+  gMinVolume: 0.5
+  gMaxVolume: 1
 --- !u!82 &-6127695754954911349
 AudioSource:
   m_ObjectHideFlags: 0

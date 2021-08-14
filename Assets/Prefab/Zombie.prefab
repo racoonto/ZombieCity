@@ -216,7 +216,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7040432331553427627
 Transform:
   m_ObjectHideFlags: 0
@@ -450,13 +450,23 @@ MonoBehaviour:
   audios:
   - clip: {fileID: 8300000, guid: 27b98a8c68f991b408c5c6afff25358c, type: 3}
     ratio: 1
+    minVolume: 1
+    maxVolume: 1
   - clip: {fileID: 8300000, guid: 5ce6bb262e363834db2b5cdef8a21155, type: 3}
     ratio: 1
+    minVolume: 1
+    maxVolume: 1
   - clip: {fileID: 8300000, guid: bdb798b20d5ac2f438f3a562f4150019, type: 3}
     ratio: 1
+    minVolume: 1
+    maxVolume: 1
   - clip: {fileID: 8300000, guid: 821b6440d8e269c40b5a0eb8a44a079d, type: 3}
     ratio: 1
+    minVolume: 1
+    maxVolume: 1
   maxRandomTime: 30
+  gMinVolume: 0.5
+  gMaxVolume: 1
 --- !u!1001 &7040432331263121585
 PrefabInstance:
   m_ObjectHideFlags: 0
